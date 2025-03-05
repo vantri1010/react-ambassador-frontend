@@ -1,5 +1,7 @@
 # Dependency directories
 node_modules/
+/.pnp
+.pnp.js
 
 # Build directories
 build/
@@ -40,8 +42,16 @@ coverage/
 .nyc_output/
 
 # Misc
+*.pem
 *.log
 *.tmp
 *.pid
 *.seed
 *.pid.lock
+
+# vercel
+.vercel
+
+# next.js
+/.next/
+/out/
