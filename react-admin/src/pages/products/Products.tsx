@@ -59,7 +59,7 @@ const Products = () => {
                         return (
                             <TableRow key={product.id}>
                                 <TableCell>{product.id}</TableCell>
-                                <TableCell><img src={product.image} width={50}/></TableCell>
+                                <TableCell><img src={product.image} alt={product.title} width={50}/></TableCell>
                                 <TableCell>{product.title}</TableCell>
                                 <TableCell>{product.description}</TableCell>
                                 <TableCell>{product.price}</TableCell>

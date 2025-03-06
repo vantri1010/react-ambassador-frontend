@@ -24,24 +24,35 @@ const ProductForm = (props: any) => {
                 }
             )();
         }
-    }, [])
+    }, [props.match.params.id])
 
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
+
+        // Basic validation
+        if (!title || !description || !image || !price) {
+            alert("All fields are required.");
+            return;
+        }
+
         const data = {
             title,
             description,
             image,
-            price
+            price: parseFloat(price) // Convert price to a number
         };
 
-        if (props.match.params.id) {
-            await axios.put(`products/${props.match.params.id}`, data);
-        } else {
-            await axios.post('products', data);
-        }
+        try {
+            if (props.match.params.id) {
+                await axios.put(`products/${props.match.params.id}`, data);
+            } else {
+                await axios.post('products', data);
+            }
 
-        setRedirect(true);
+            setRedirect(true);
+        } catch (error) {
+            console.log(JSON.stringify(data));
+        }
     }
 
     if (redirect) {

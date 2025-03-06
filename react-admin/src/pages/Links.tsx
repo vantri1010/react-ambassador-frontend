@@ -17,7 +17,7 @@ const Links = (props: any) => {
                 setLinks(data);
             }
         )()
-    }, []);
+    }, [props.match.params.id]);
 
     return (
         <Layout>
@@ -31,13 +31,13 @@ const Links = (props: any) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {links.slice(page * perPage, (page + 1) * perPage).map(link => {
+                    {links && links.slice(page * perPage, (page + 1) * perPage).map(link => {
                         return (
                             <TableRow key={link.id}>
                                 <TableCell>{link.id}</TableCell>
                                 <TableCell>{link.code}</TableCell>
-                                <TableCell>{link.orders.length}</TableCell>
-                                <TableCell>{link.orders.reduce((s, o) => s + o.total, 0)}</TableCell>
+                                <TableCell>{link.orders ? link.orders.length : 0}</TableCell>
+                                <TableCell>{link.orders ? link.orders.reduce((s, o) => s + o.total, 0) : 0}</TableCell>
                             </TableRow>
                         )
                     })}
@@ -45,7 +45,7 @@ const Links = (props: any) => {
                 <TableFooter>
                     <TablePagination
                         component="div"
-                        count={links.length}
+                        count={links ? links.length : 0}
                         page={page}
                         onPageChange={(e, newPage) => setPage(newPage)}
                         rowsPerPage={perPage}

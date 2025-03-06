@@ -22,7 +22,7 @@ const Layout = (props: any) => {
                 }
             }
         )();
-    }, []);
+    }, [props]);
 
     if (redirect) {
         return <Redirect to={'/login'}/>
