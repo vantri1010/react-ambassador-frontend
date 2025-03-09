@@ -1,8 +1,8 @@
-import React, {Dispatch, useEffect, useState} from 'react';
+import {Dispatch, useEffect} from 'react';
 import Nav from "./Nav";
 import Header from "./Header";
 import axios from "axios";
-import {Redirect, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {User} from "../models/user";
 import {setUser} from "../redux/actions/setUserAction";
 import {connect} from "react-redux";
@@ -22,7 +22,7 @@ const Layout = (props: any) => {
                 }
             }
         )();
-    }, []);
+    }, [props]);
 
     let header;
 

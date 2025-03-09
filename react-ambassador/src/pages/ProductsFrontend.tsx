@@ -60,7 +60,7 @@ const ProductsFrontend = () => {
         console.log(filters.page * perPage);
         setLastPage(Math.ceil(products.length / perPage));
         setFilteredProducts(products.slice(0, filters.page * perPage));
-    }, [filters]);
+    }, [filters, allProducts]);
 
     return (
         <Layout>

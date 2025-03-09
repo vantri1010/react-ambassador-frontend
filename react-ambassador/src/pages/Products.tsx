@@ -78,7 +78,7 @@ const Products = (props: {
 
     let button;
 
-    if (props.filters.page != props.lastPage) {
+    if (props.filters.page !== props.lastPage) {
         button = (
             <div className="d-flex justify-content-center mt-4">
                 <button className="btn btn-primary" onClick={load}>Load More</button>
@@ -130,7 +130,7 @@ const Products = (props: {
                         <div className="col" key={product.id} onClick={() => select(product.id)}>
                             <div
                                 className={selected.some(s => s === product.id) ? "card shadow-sm selected" : "card shadow-sm"}>
-                                <img src={product.image} height={200}/>
+                                <img src={product.image} height={200} alt={product.title}/>
 
                                 <div className="card-body">
                                     <p className="card-text">{product.title}</p>

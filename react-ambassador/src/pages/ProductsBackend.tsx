@@ -33,7 +33,7 @@ const ProductsBackend = () => {
 
                 const {data} = await axios.get(`products/backend?${arr.join('&')}`);
 
-                setProducts(filters.page === 1 ? data.data : [...products, ...data.data]);
+                setProducts(p => filters.page === 1 ? data.data : [...p, ...data.data]);
                 setLastPage(data.meta.last_page);
             }
         )()

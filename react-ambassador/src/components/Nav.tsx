@@ -1,6 +1,6 @@
-import React, {Dispatch, useState} from 'react';
+import React, {Dispatch} from 'react';
 import {connect} from "react-redux";
-import {Link, NavLink, Redirect} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {User} from "../models/user";
 import axios from "axios";
 import {setUser} from "../redux/actions/setUserAction";
@@ -18,9 +18,9 @@ const Nav = (props: any) => {
             <div className="col-md-3 text-end">
                 <Link to={'/rankings'} className="btn me-2">Rankings</Link>
                 <Link to={'/stats'} className="btn me-2">Stats</Link>
-                <a href="#" className="btn btn-outline-primary me-2"
-                   onClick={logout}
-                >Logout</a>
+                <button className="btn btn-outline-primary me-2"
+                        onClick={logout}
+                >Logout</button>
                 <Link to={'/profile'} className="btn btn-primary">{props.user.first_name} {props.user.last_name}</Link>
             </div>
         )
