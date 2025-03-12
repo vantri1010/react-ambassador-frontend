@@ -7,7 +7,12 @@ import {User} from "../models/user";
 import {connect} from "react-redux";
 import {setUser} from "../redux/actions/setUserAction";
 
-const Layout = (props: any) => {
+interface LayoutProps {
+    children: React.ReactNode;
+    setUser: (user: User) => void;
+}
+
+const Layout = ({children, setUser}: LayoutProps) => {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
@@ -15,14 +20,13 @@ const Layout = (props: any) => {
             async () => {
                 try {
                     const {data} = await axios.get('user');
-
-                    props.setUser(data);
+                    setUser(data);
                 } catch (e) {
                     setRedirect(true);
                 }
             }
         )();
-    }, [props]);
+    }, [setUser]); // Add setUser to dependencies
 
     if (redirect) {
         return <Redirect to={'/login'}/>
@@ -31,14 +35,12 @@ const Layout = (props: any) => {
     return (
         <div>
             <Nav />
-
             <div className="container-fluid">
                 <div className="row">
                     <Menu/>
-
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <div className="table-responsive">
-                            {props.children}
+                            {children}
                         </div>
                     </main>
                 </div>

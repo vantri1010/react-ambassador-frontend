@@ -7,7 +7,12 @@ import {User} from "../models/user";
 import {setUser} from "../redux/actions/setUserAction";
 import {connect} from "react-redux";
 
-const Layout = (props: any) => {
+interface LayoutProps {
+    children: React.ReactNode;
+    setUser: (user: User) => void;
+}
+
+const Layout = ({children, setUser}: LayoutProps) => {
     const location = useLocation();
 
     useEffect(() => {
@@ -15,14 +20,13 @@ const Layout = (props: any) => {
             async () => {
                 try {
                     const {data} = await axios.get('user');
-
-                    props.setUser(data);
+                    setUser(data);
                 } catch (e) {
                     console.log(e);
                 }
             }
         )();
-    }, [props]);
+    }, [setUser]); // Only depend on setUser
 
     let header;
 
@@ -33,16 +37,11 @@ const Layout = (props: any) => {
     return (
         <div>
             <Nav/>
-
             <main>
-
                 {header}
-
                 <div className="album py-5 bg-light">
                     <div className="container">
-
-                        {props.children}
-
+                        {children}
                     </div>
                 </div>
             </main>
