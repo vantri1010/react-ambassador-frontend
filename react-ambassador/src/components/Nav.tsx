@@ -1,19 +1,31 @@
 import React, {Dispatch} from 'react';
 import {connect} from "react-redux";
-import {Link, NavLink} from 'react-router-dom';
+import {Link, NavLink, useHistory} from 'react-router-dom';
 import {User} from "../models/user";
 import axios from "axios";
 import {setUser} from "../redux/actions/setUserAction";
 
-const Nav = (props: any) => {
+interface NavProps {
+    user: User | null;
+    setUser: (user: User | null) => void;
+}
+
+const Nav = ({user, setUser}: NavProps) => {
+    const history = useHistory();
+
     const logout = async () => {
-        await axios.post('logout');
-        props.setUser(null);
+        try {
+            await axios.post('logout');
+            setUser(null);
+            history.push('/login');
+        } catch (e) {
+            console.error('Logout failed:', e);
+        }
     }
 
     let menu;
 
-    if (props.user?.id) {
+    if (user?.id) {
         menu = (
             <div className="col-md-3 text-end">
                 <Link to={'/rankings'} className="btn me-2">Rankings</Link>
@@ -21,7 +33,7 @@ const Nav = (props: any) => {
                 <button className="btn btn-outline-primary me-2"
                         onClick={logout}
                 >Logout</button>
-                <Link to={'/profile'} className="btn btn-primary">{props.user.first_name} {props.user.last_name}</Link>
+                <Link to={'/profile'} className="btn btn-primary">{user.first_name} {user.last_name}</Link>
             </div>
         )
     } else {
@@ -56,10 +68,10 @@ const Nav = (props: any) => {
 };
 
 export default connect(
-    (state: { user: User }) => ({
+    (state: { user: User | null }) => ({
         user: state.user
     }),
     (dispatch: Dispatch<any>) => ({
-        setUser: (user: User) => dispatch(setUser(user))
+        setUser: (user: User | null) => dispatch(setUser(user))
     })
 )(Nav);

@@ -1,11 +1,17 @@
 import React, {Dispatch, SyntheticEvent, useEffect, useState} from 'react';
+import {Redirect} from 'react-router-dom';
 import Layout from "../components/Layout";
 import axios from "axios";
 import {connect} from "react-redux";
 import {User} from "../models/user";
 import {setUser} from "../redux/actions/setUserAction";
 
-const Profile = (props: any) => {
+interface ProfileProps {
+    user: User | null;
+    setUser: (user: User) => void;
+}
+
+const Profile = ({user, setUser}: ProfileProps) => {
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -13,10 +19,16 @@ const Profile = (props: any) => {
     const [password_confirm, setPasswordConfirm] = useState('');
 
     useEffect(() => {
-        setFirstName(props.user.first_name);
-        setLastName(props.user.last_name);
-        setEmail(props.user.email);
-    }, [props.user]);
+        if (user) {
+            setFirstName(user.first_name);
+            setLastName(user.last_name);
+            setEmail(user.email);
+        }
+    }, [user]);
+
+    if (!user) {
+        return <Redirect to="/login" />;
+    }
 
     const infoSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
@@ -27,7 +39,7 @@ const Profile = (props: any) => {
             email
         });
 
-        props.setUser(data);
+        setUser(data);
     }
 
     const passwordSubmit = async (e: SyntheticEvent) => {

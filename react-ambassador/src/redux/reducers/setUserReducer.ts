@@ -1,10 +1,14 @@
 import {User} from "../../models/user";
 
-const initialState = {
-    user: new User()
+interface UserState {
+    user: User | null;
 }
 
-export const setUserReducer = (state = initialState, action: { type: string, user: User }) => {
+const initialState: UserState = {
+    user: null
+}
+
+export const setUserReducer = (state = initialState, action: { type: string, user: User | null }) => {
     switch (action.type) {
         case "SET_USER":
             return {
