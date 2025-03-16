@@ -36,8 +36,8 @@ const Links = (props: any) => {
                             <TableRow key={link.id}>
                                 <TableCell>{link.id}</TableCell>
                                 <TableCell>{link.code}</TableCell>
-                                <TableCell>{link.orders ? link.orders.length : 0}</TableCell>
-                                <TableCell>{link.orders ? link.orders.reduce((s, o) => s + o.total, 0) : 0}</TableCell>
+                                <TableCell>{link.order_count ? link.order_count : 0}</TableCell>
+                                <TableCell>{link.total ? link.total : 0}</TableCell>
                             </TableRow>
                         )
                     })}
